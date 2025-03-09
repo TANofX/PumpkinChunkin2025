@@ -3,15 +3,14 @@
 // the WPILib BSD license file in the root directory of this project.
 package frc.robot;
 
-import java.util.Optional;
-import java.util.function.BooleanSupplier;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.math.geometry.Transform2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.lib.input.controllers.XboxControllerWrapper;
 import edu.wpi.first.wpilibj2.command.*;
-import frc.robot.commands.SwerveDriveWithGamepad;
 import frc.robot.subsystems.*;
 
 
@@ -35,8 +34,25 @@ public class RobotContainer {
     SmartDashboard.putData(swerve.zeroModulesCommand());
     configureButtonBindings();
     // LEDs.setDefaultCommand(new Notifications());
-   
-    
+
+    SmartDashboard.putData("Reset position",Commands.runOnce(() -> {
+      swerve.resetOdometry(Pose2d.kZero);
+    }, swerve));
+
+    SmartDashboard.putData("Flip position 180",Commands.runOnce(() -> {
+      swerve.resetOdometry(swerve.getPose().transformBy(new Transform2d(
+              Translation2d.kZero,
+              Rotation2d.fromDegrees(180)
+      )));
+    }, swerve));
+
+    SmartDashboard.putData("Flip position 90",Commands.runOnce(() -> {
+      swerve.resetOdometry(swerve.getPose().transformBy(new Transform2d(
+              Translation2d.kZero,
+              Rotation2d.fromDegrees(90)
+      )));
+    }, swerve));
+
 
     // SmartDashboard.putData(intake.getIntakePivotTuner());
     // SmartDashboard.putData(intake.getIntakeTuner());

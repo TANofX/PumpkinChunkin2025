@@ -26,6 +26,7 @@ public class RobotContainer {
   // public static final LEDs LEDs = new LEDs();
   // Other Hardware
   public static final PowerDistribution powerDistribution = new PowerDistribution();
+  public static final Chunker chunker = new Chunker();
 
   // Vision clients
   // public static final JetsonClient jetson = new JetsonClient();
@@ -53,7 +54,6 @@ public class RobotContainer {
       )));
     }, swerve));
 
-
     // SmartDashboard.putData(intake.getIntakePivotTuner());
     // SmartDashboard.putData(intake.getIntakeTuner());
     //SmartDashboard.putData("Tune Elevation", shooterWrist.getElevationTunerCommand());
@@ -80,14 +80,16 @@ public class RobotContainer {
     //PPHolonomicDriveController.setRotationTargetOverride(this::overrideAngle);
   }
   
-
   private void configureButtonBindings() {    
         //Commands.waitSeconds(.5).andThen(new Shoot().andThen(Commands.waitSeconds(0.5).andThen(Commands.runOnce(() -> {
           //shooter.stopMotors();
        // }, shooter))))));
-   
     //coDriver.X().onTrue(new ElevatorToMin());
     coDriver.START();
+    driver.X().onTrue(chunker.windupCommand(0.2));
+    driver.Y().onTrue(chunker.releaseCommand());
+    driver.A().onTrue(chunker.closeCommand());
+
   /*   
         }, shooter))).andThen(new Shoot().andThen(Commands.waitSeconds(0.5).andThen(Commands.runOnce(() -> {
           shooter.stopMotors();

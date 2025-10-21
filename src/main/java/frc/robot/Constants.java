@@ -161,4 +161,10 @@ public final class Constants {
     public static final int stealerLED = 5;
     public static final int manhattanLED = 6;
   }
+
+  public static final class PumpkinChunkin {
+    public static final int windupMotorID = 40;
+    public static final int pumpkinSolenoidID = 0;
+    public static final int pumpkinLimitID = 0;
+  }
 }

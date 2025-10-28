@@ -89,6 +89,7 @@ public class RobotContainer {
     driver.X().onTrue(chunker.windupCommand(0.2));
     driver.Y().onTrue(chunker.releaseCommand());
     driver.A().onTrue(chunker.closeCommand());
+    driver.B().onTrue(chunker.stopMotorCommand());
 
   /*   
         }, shooter))).andThen(new Shoot().andThen(Commands.waitSeconds(0.5).andThen(Commands.runOnce(() -> {

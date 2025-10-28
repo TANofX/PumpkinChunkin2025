@@ -58,11 +58,11 @@ public class SwerveDriveWithGamepad extends Command {
     x = Math.copySign(x * x, x);
     double y = -RobotContainer.driver.getLeftX()* maxSpeedForChild;
     y = Math.copySign(y * y, y);
-    Optional<Alliance> currentAlliance = DriverStation.getAlliance();
-    if (currentAlliance.isPresent() && currentAlliance.get() == Alliance.Red) {
-      x = -1 * x;
-      y = -1 * y;
-    }
+    // Optional<Alliance> currentAlliance = DriverStation.getAlliance();
+    // if (currentAlliance.isPresent() && currentAlliance.get() == Alliance.Red) {
+    //   x = -1 * x;
+    //   y = -1 * y;
+    // }
     double rot;
       rot = -RobotContainer.driver.getRightX() * maxSpeedForChild;
       rot = Math.copySign(rot * rot, rot);
@@ -81,12 +81,12 @@ public class SwerveDriveWithGamepad extends Command {
     if (stop) {
       rotationTarget = null;
 
-      RobotContainer.swerve.driveFieldRelative(new ChassisSpeeds(xVel, yVel, angularVel));
+      RobotContainer.swerve.driveRobotRelative(new ChassisSpeeds(xVel, yVel, angularVel));
     } else {
         rotationTarget = null;      
     }
 
-    RobotContainer.swerve.driveFieldRelative(new ChassisSpeeds(xVel, yVel, angularVel));
+    RobotContainer.swerve.driveRobotRelative(new ChassisSpeeds(xVel, yVel, angularVel));
 
   }
 

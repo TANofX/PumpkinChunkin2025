@@ -10,27 +10,19 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-//import edu.wpi.first.math.numbers.N1;
-//import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.StructArrayPublisher;
 import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.LinearAcceleration;
-//import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.*;
-import frc.lib.pid.TunablePIDSet;
-import frc.lib.pid.TunePIDController;
 import frc.lib.subsystem.AdvancedSubsystem;
-//import frc.lib.subsystem.SubsystemFault;
 import frc.lib.swerve.Mk4SwerveModulePro;
-import frc.lib.swerve.Mk4SwerveModuleProSparkFlex;
 import frc.lib.util.Vector3;
-//import frc.lib.vision.limelight.LimelightHelpers;
 import frc.robot.Constants;
 import frc.robot.util.RobotPoseLookup;
 
@@ -693,7 +685,7 @@ public class Swerve extends AdvancedSubsystem {
         Commands.runOnce(
             () -> {
               driveFieldRelative(new ChassisSpeeds());
-              if (-imu.getRate() < Units.radiansToDegrees(0.3)) {
+              if (-imu.getRate() < Units.radiansToDegrees(0.3)) { //-imu.getAngularVelocityZWorld.getValueasDouble()
                 addFault("[System Check] IMU rate too low", false, true);
               }
             },
@@ -703,7 +695,7 @@ public class Swerve extends AdvancedSubsystem {
         Commands.runOnce(
             () -> {
               driveFieldRelative(new ChassisSpeeds());
-              if (-imu.getRate() > Units.radiansToDegrees(-0.3)) {
+              if (-imu.getRate() > Units.radiansToDegrees(-0.3)) { //-imu.getAngularVelocityZWorld.getValueasDouble()
                 addFault("[System Check] IMU rate too low", false, true);
               }
             },

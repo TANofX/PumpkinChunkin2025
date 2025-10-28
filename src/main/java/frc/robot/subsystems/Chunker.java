@@ -72,6 +72,6 @@ public class Chunker extends SubsystemBase {
 
   public Command stopMotorCommand() {
     return Commands.runOnce(
-      ()-> {stopMotor();}, null);
+      ()-> {stopMotor();}, this);
   }
   }

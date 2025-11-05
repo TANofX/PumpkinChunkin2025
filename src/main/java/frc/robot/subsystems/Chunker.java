@@ -18,22 +18,24 @@ import frc.robot.Constants;
 public class Chunker extends SubsystemBase {
   private final SparkFlex windupMotor;
   private final Solenoid releasePiston;
-  private final SparkLimitSwitch downSwitch;
+  // private final SparkLimitSwitch downSwitch;
    private final PneumaticsControlModule releaseModule;
   
   public Chunker() {
     windupMotor = new SparkFlex(40,MotorType.kBrushless);
     releaseModule = new PneumaticsControlModule(Constants.PumpkinChunkin.PCMID); //if the pump no start, uncomment
-    releasePiston = new Solenoid(PneumaticsModuleType.CTREPCM, 0);
-    downSwitch = windupMotor.getForwardLimitSwitch(); //Which one, reverse or forward???
+    releasePiston = releaseModule.makeSolenoid(0);
+    // downSwitch = windupMotor.getForwardLimitSwitch(); //Which one, reverse or forward???
     releaseModule.enableCompressorDigital();
+    
   }
   
-  public boolean readyToRelease() {
-    return downSwitch.isPressed();
-  }
+  // public boolean readyToRelease() {
+  //   return downSwitch.isPressed();
+  // }
 
-  public void release() {
+  public void 
+  release() {
     releasePiston.set(true); //True or False ???
   }
 
@@ -44,6 +46,10 @@ public class Chunker extends SubsystemBase {
   public void windup(double speed) {
     windupMotor.set(speed);
    }
+
+  public void reverseWindup(double speed) {
+  windupMotor.set(speed);
+  }
   
   public void stopMotor() {
     windupMotor.stopMotor();
@@ -52,12 +58,17 @@ public class Chunker extends SubsystemBase {
   public void periodic() {
   }
 
-  public Command windupCommand(double speed) {  
-    return Commands.sequence(
-    Commands.run(() -> { windup(speed);
-    }, this).until( () -> {
-      return readyToRelease();
-    })).finallyDo(() -> {stopMotor();});
+//   public Command windupCommand(double speed) {  
+//     return Commands.sequence(
+//     Commands.run(() -> { windup(speed);
+//     }, this).until( () -> {
+//       return readyToRelease();
+//     })).finallyDo(() -> {stopMotor();});
+// }
+
+public Command windupCommand(double speed) {  
+  return Commands.runOnce(
+    () -> {windup(speed);}, this);
 }
 
   public Command releaseCommand() {
